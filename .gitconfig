@@ -1,0 +1,21 @@
+[user]
+  name = Chris Lowder
+  email = clowder@gmail.com
+
+[alias]
+  ci = commit
+  co = checkout
+  st = status
+  br = branch
+
+[core]
+  editor = mvim -f
+  excludesfile = /Users/Chris/.gitignore_global
+
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+
+[github]
+  user = clowder
