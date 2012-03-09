@@ -1,0 +1,11 @@
+set guifont=Monaco:h12
+set background=dark
+color solarized
+
+" remove trailing whitespace
+autocmd BufWritePre * :%s/\s\+$//e
+
+" use the system clipboard
+if has("clipboard")
+  set clipboard=unnamed
+endif

@@ -1,0 +1,5 @@
+# local foreman env files.
+.env
+
+# OS X junk files
+.DS_Store

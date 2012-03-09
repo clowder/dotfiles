@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+export CURRENT_DIR=`pwd`
+export DOTFILES="$CURRENT_DIR/.*"
+
+for dotfile in $DOTFILES; do
+  [[ -f "$dotfile" ]] && ln -sfv "$dotfile" ~
+done
