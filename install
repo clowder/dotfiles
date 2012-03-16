@@ -3,6 +3,11 @@
 export CURRENT_DIR=`pwd`
 export DOTFILES="$CURRENT_DIR/.*"
 
+if [[ $1 == '-u' ]]; then
+  git pull --rebase origin master
+  git push origin master
+fi
+
 for dotfile in $DOTFILES; do
   [[ -f "$dotfile" ]] && ln -sfv "$dotfile" ~
 done
