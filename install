@@ -11,3 +11,6 @@ fi
 for dotfile in $DOTFILES; do
   [[ -f "$dotfile" ]] && ln -sfv "$dotfile" ~
 done
+
+# Make our bash_profile & bashrc the samw file (OS X fail)
+ln -fv ~/.bash_profile ~/.bashrc
