@@ -1,5 +1,7 @@
 export PATH="/usr/local/share/python:/usr/local/bin:/usr/local/sbin/:$HOME/.rbenv/bin:$HOME/bin:$PATH"
+
 eval "$(rbenv init -)"
+eval "$(hub alias -s)"
 
 export NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
 
@@ -12,7 +14,6 @@ vpn () {
 source ~/.local_aliases
 
 alias be="bundle exec "
-alias git="hub"
 alias mate="mvim"
 alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
