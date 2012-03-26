@@ -32,3 +32,7 @@ autotest_config() {
   [[ ! -d "$AUTOTEST_DIR" ]] && mkdir $AUTOTEST_DIR
   [[ ! -f "$AUTOTEST_CONFIG" ]] && echo "Autotest.add_discovery { \"rspec2\" }" > $AUTOTEST_CONFIG
 }
+
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+  source `brew --prefix`/etc/bash_completion
+fi
