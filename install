@@ -1,18 +1,35 @@
 #!/usr/bin/env bash
 
+#####
+# Usage
+#
+# `./install`
+#
+# -u    Do a `git pull` & `git push` before installing
+#####
+
 CURRENT_DIR=`pwd`
 DOTFILES="$CURRENT_DIR/.*"
-VIMDIR="$CURRENT_DIR/.vim"
+VIM_DIR="$CURRENT_DIR/.vim"
 
-if [[ $1 == '-u' ]]; then
+if [[ "$1" == "-u" ]]; then
+  GIT_UPDATE=true
+else
+  GIT_UPDATE=false
+fi
+
+if $GIT_UPDATE; then
+  echo 'Updating git repo...'
   git pull --rebase origin master
   git push origin master
 fi
 
-ln -sfv $VIMDIR ~
+ln -sfv $VIM_DIR ~
 
 for dotfile in $DOTFILES; do
-  [[ -f "$dotfile" ]] && ln -sfv "$dotfile" ~
+  if [[ ! "$dotfile" =~ \.git(ignore|modules)$ ]] && [[ -f "$dotfile" ]]; then
+    ln -sfv "$dotfile" ~
+  fi
 done
 
 # Make our bash_profile & bashrc the same file (OS X fail)

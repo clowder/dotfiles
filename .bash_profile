@@ -1,17 +1,13 @@
 export PATH="/usr/local/share/python:/usr/local/bin:/usr/local/sbin/:$HOME/.rbenv/bin:$HOME/bin:$PATH"
 
+if [[ -f `brew --prefix`/etc/bash_completion ]]; then
+  source `brew --prefix`/etc/bash_completion
+fi
+
 eval "$(rbenv init -)"
 eval "$(hub alias -s)"
 
 export NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
-
-export SSHUTLE_PATH="~/oss/sshuttle/"
-export PATH="$PATH:$SSHUTLE_PATH"
-vpn () {
-  sshuttle -r $1 0/0 -v --dns
-}
-
-source ~/.local_aliases
 
 alias be="bundle exec "
 alias mate="mvim"
@@ -33,6 +29,10 @@ autotest_config() {
   [[ ! -f "$AUTOTEST_CONFIG" ]] && echo "Autotest.add_discovery { \"rspec2\" }" > $AUTOTEST_CONFIG
 }
 
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-  source `brew --prefix`/etc/bash_completion
-fi
+function branch_cleanup_local {
+  for branch in $(git branch --merged master | grep -v master | cut -f2 -d/); do
+    git branch -d ${branch}
+  done
+}
+
+source ~/.local_profile
