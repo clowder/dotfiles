@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
-export CURRENT_DIR=`pwd`
-export DOTFILES="$CURRENT_DIR/.*"
+CURRENT_DIR=`pwd`
+DOTFILES="$CURRENT_DIR/.*"
+VIMDIR="$CURRENT_DIR/.vim"
 
 if [[ $1 == '-u' ]]; then
   git pull --rebase origin master
   git push origin master
 fi
 
+ln -sfv $VIMDIR ~
+
 for dotfile in $DOTFILES; do
   [[ -f "$dotfile" ]] && ln -sfv "$dotfile" ~
 done
 
-# Make our bash_profile & bashrc the samw file (OS X fail)
+# Make our bash_profile & bashrc the same file (OS X fail)
 ln -fv ~/.bash_profile ~/.bashrc
+
+vim +BundleInstall +qall
