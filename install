@@ -5,23 +5,31 @@
 #
 # `./install`
 #
-# -u    Do a `git pull` & `git push` before installing
+# -u    Do a `git pull`, `git push` & `git submodule update` before installing
 #####
 
 CURRENT_DIR=`pwd`
 DOTFILES="$CURRENT_DIR/.*"
 VIM_DIR="$CURRENT_DIR/.vim"
+GIT_UPDATE=false
+FIRST_RUN=false
 
 if [[ "$1" == "-u" ]]; then
   GIT_UPDATE=true
-else
-  GIT_UPDATE=false
 fi
 
-if $GIT_UPDATE; then
+if [[ ! -d "$CURRENT_DIR/.git/modules/.vim/bundle/vundle"]]; then
+  FIRST_RUN=true
+fi
+
+if $GIT_UPDATE || $FIRST_RUN; then
   echo 'Updating git repo...'
   git pull --rebase origin master
   git push origin master
+
+  echo 'Updating git submodules...'
+  git submodule init
+  git submodule update
 fi
 
 ln -sfv $VIM_DIR ~
