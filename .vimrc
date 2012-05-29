@@ -32,6 +32,8 @@ if has("clipboard")
   set clipboard=unnamed
 endif
 
+set number
+
 " No fucking wrapping!!!!
 set nowrap
 
