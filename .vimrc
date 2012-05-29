@@ -19,6 +19,8 @@ Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
+Bundle 'rodjek/vim-puppet'
+Bundle 'ack.vim'
 
 set guifont=Monaco:h12
 set background=dark
@@ -46,3 +48,8 @@ set tabstop=4
 set expandtab
 set nosmarttab
 "
+
+" use ack
+set grepprg=ack
+set grepformat=%f:%l:%m
+
