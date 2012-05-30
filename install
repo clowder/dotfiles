@@ -35,4 +35,4 @@ done
 # Make our bash_profile & bashrc the same file (OS X fail)
 ln -fv ~/.bash_profile ~/.bashrc
 
-vim +BundleInstall +qall
+vim +BundleInstall! +BundleClean! +qall
