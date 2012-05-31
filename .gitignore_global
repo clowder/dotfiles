@@ -7,3 +7,10 @@
 # Vim
 *.swp
 *.swo
+
+# Pow
+.powenv
+
+# Bundler
+b/
+
