@@ -18,7 +18,7 @@ if [[ "$1" == "-u" ]]; then
   GIT_UPDATE=true
 fi
 
-if [[ ! -d "$CURRENT_DIR/.git/modules/.vim/bundle/vundle"]]; then
+if [[ ! -d "$CURRENT_DIR/.git/modules/.vim/bundle/vundle" ]]; then
   FIRST_RUN=true
 fi
 
@@ -43,4 +43,8 @@ done
 # Make our bash_profile & bashrc the same file (OS X fail)
 ln -fv ~/.bash_profile ~/.bashrc
 
+# Make sure that there is a ~/.local_profile
+touch ~/.local_profile
+
 vim +BundleInstall! +BundleClean! +qall
+
