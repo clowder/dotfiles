@@ -22,8 +22,15 @@ Bundle 'rodjek/vim-puppet'
 Bundle 'ack.vim'
 
 set guifont=Monaco:h12
+set encoding=utf-8
+
+" solarized
 set background=dark
 color solarized
+
+" powerline
+let g:Powerline_symbols = 'fancy'
+set laststatus=2
 
 " remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
