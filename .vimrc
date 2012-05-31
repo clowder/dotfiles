@@ -29,7 +29,6 @@ set background=dark
 color solarized
 
 " powerline
-let g:Powerline_symbols = 'fancy'
 set laststatus=2
 
 " remove trailing whitespace
