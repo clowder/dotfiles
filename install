@@ -22,6 +22,11 @@ if [[ ! -d "$CURRENT_DIR/.git/modules/.vim/bundle/vundle" ]]; then
   FIRST_RUN=true
 fi
 
+if $GIT_UPDATE && ! $FIRST_RUN; then
+  echo 'Cleaning up submodules...'
+  git submodule foreach git clean -fd
+fi
+
 if $GIT_UPDATE || $FIRST_RUN; then
   echo 'Updating git repo...'
   git pull --rebase origin master
