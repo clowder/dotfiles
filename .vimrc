@@ -58,3 +58,9 @@ set nosmarttab
 set grepprg=ack
 set grepformat=%f:%l:%m
 
+" disciplinary measures
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
+
