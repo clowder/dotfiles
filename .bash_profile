@@ -1,3 +1,5 @@
+EDITOR="vim"
+
 export PATH="/usr/local/share/python:/usr/local/bin:/usr/local/sbin/:$HOME/.rbenv/bin:$HOME/bin:$PATH"
 
 if [[ -f `brew --prefix`/etc/bash_completion ]]; then
@@ -10,7 +12,7 @@ eval "$(hub alias -s)"
 export NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
 
 alias be="bundle exec "
-alias mate="mvim"
+alias mate="echo -e '\\n----------------\\nStop Doing This!\\n----------------\\n'"
 alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
 rspec_config() {

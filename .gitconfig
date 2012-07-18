@@ -9,7 +9,6 @@
   br = !branch_name="$(git branch | grep '*')" && echo ${branch_name/* /}
 
 [core]
-  editor = mvim -f
   excludesfile = /Users/Chris/.gitignore_global
 
 [color]
