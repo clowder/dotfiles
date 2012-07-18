@@ -1,6 +1,3 @@
-set nocompatible               " be iMproved
-filetype off                   " required!
-
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -21,14 +18,69 @@ Bundle 'tpope/vim-surround'
 Bundle 'rodjek/vim-puppet'
 Bundle 'ack.vim'
 
-set guifont=Monaco:h12
+set nocompatible
+
+" allow unsaved background buffers and remember marks/undo for them
+set hidden
+
+" remember more commands and search history
+set history=10000
+
+" 2 space tabs
+set expandtab
+set softtabstop=2
+set shiftwidth=2
+set tabstop=4
+set autoindent
+
+" make searches case-sensitive only if they contain upper-case characters
+set ignorecase smartcase
+
+" highlight current line
+set cursorline
+
+set switchbuf=useopen
+set numberwidth=5
+set showtabline=2
+set winwidth=79
+
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
+
+" keep more context when scrolling off the end of a buffer
+set scrolloff=3
+
+" display incomplete commands
+set showcmd
+
+" Enable highlighting for syntax
+syntax on
+
+" Enable file type detection.
+" Use the default filetype settings, so that mail gets 'tw' set to 72,
+" 'cindent' is on in C files, etc.
+" Also load indent files, to automatically do language-dependent indenting.
+filetype plugin indent on
+
+" use emacs-style tab completion when selecting files, etc
+set wildmode=longest,list
+
+" make tab completion for files/buffers act like bash
+set wildmenu
+
+" line numbers by default
+set number
+
 set encoding=utf-8
 
-" solarized
+" theming
+set t_Co=256 " 256 colors
+set guifont=Monaco:h12
 set background=dark
 color solarized
 
-" powerline
+" always show the status bar, powerline
 set laststatus=2
 
 " remove trailing whitespace
@@ -39,26 +91,22 @@ if has("clipboard")
   set clipboard=unnamed
 endif
 
-set number
+" sytax highlighing
+au BufRead,BufNewFile *.pp set filetype=puppet
 
-" No fucking wrapping!!!!
-set nowrap
+" indent if we're at the beginning of a line. Else, do completion.
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
 
-" 2 Space tabs
-set autoindent
-set smartindent
-set softtabstop=2
-set shiftwidth=2
-set tabstop=4
-set expandtab
-set nosmarttab
-"
-
-" use ack
-set grepprg=ack
-set grepformat=%f:%l:%m
-
-" disciplinary measures
+" disable the arrow keys
 map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
