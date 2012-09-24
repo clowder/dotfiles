@@ -35,6 +35,14 @@ if $GIT_UPDATE || $FIRST_RUN; then
   echo 'Updating git submodules...'
   git submodule init
   git submodule update
+
+  echo 'Fixing ruby.vim...'
+  # http://vimdoc.sourceforge.net/htmldoc/starting.html#%24VIMRUNTIME
+  VIMRUNTIME=`vim -e -T dumb --cmd 'exe "set t_cm=\<C-M>"|echo $VIMRUNTIME|quit' | tr -d '\015'`
+  cd "${VIMRUNTIME}/ftplugin"
+  rm -r "ruby.vim"
+  wget "https://raw.github.com/vim-ruby/vim-ruby/master/ftplugin/ruby.vim"
+  cd $CURRENT_DIR
 fi
 
 ln -sfv $VIM_DIR ~
