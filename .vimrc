@@ -8,15 +8,12 @@ Bundle 'gmarik/vundle'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'kien/ctrlp.vim'
-Bundle 'JavaScript-Indent'
-Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
-Bundle 'rodjek/vim-puppet'
 Bundle 'ack.vim'
+Bundle 'mudge/runspec.vim'
 
 set nocompatible
 
@@ -44,10 +41,6 @@ set numberwidth=5
 set showtabline=2
 set winwidth=79
 
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-set t_ti= t_te=
-
 " keep more context when scrolling off the end of a buffer
 set scrolloff=3
 
@@ -63,12 +56,6 @@ syntax on
 " Also load indent files, to automatically do language-dependent indenting.
 filetype plugin indent on
 
-" use emacs-style tab completion when selecting files, etc
-set wildmode=longest,list
-
-" make tab completion for files/buffers act like bash
-set wildmenu
-
 " line numbers by default
 set number
 
@@ -76,6 +63,7 @@ set encoding=utf-8
 
 " theming
 set t_Co=256 " 256 colors
+set term=xterm-256color
 set guifont=Monaco:h12
 set background=dark
 color solarized
@@ -90,9 +78,6 @@ autocmd BufWritePre * :%s/\s\+$//e
 if has("clipboard")
   set clipboard=unnamed
 endif
-
-" sytax highlighing
-au BufRead,BufNewFile *.pp set filetype=puppet
 
 " indent if we're at the beginning of a line. Else, do completion.
 function! InsertTabWrapper()

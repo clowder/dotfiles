@@ -11,8 +11,6 @@ eval "$(hub alias -s)"
 
 export NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
 
-alias be="bundle exec "
-alias mate="echo -e '\\n----------------\\nStop Doing This!\\n----------------\\n'"
 alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
 rspec_config() {
