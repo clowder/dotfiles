@@ -50,6 +50,9 @@ set showcmd
 " Enable highlighting for syntax
 syntax on
 
+" The Silver Searcher
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 " Enable file type detection.
 " Use the default filetype settings, so that mail gets 'tw' set to 72,
 " 'cindent' is on in C files, etc.
