@@ -13,6 +13,14 @@ export NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
 
 alias jsc="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc"
 
+pg_start() {
+  pg_ctl -D "/usr/local/var/postgres" -l "/usr/local/var/postgres/server.log" start
+}
+
+pg_stop() {
+  pg_ctl -D "/usr/local/var/postgres" stop -s -m fast
+}
+
 rspec_config() {
   export CWD=`pwd`
   export RSPEC_CONFIG="$CWD/.rspec"
