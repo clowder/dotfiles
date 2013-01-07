@@ -1,6 +1,9 @@
 export EDITOR="vim"
-
 export PATH="/usr/local/share/python:/usr/local/bin:/usr/local/sbin/:$HOME/.rbenv/bin:$HOME/bin:$PATH"
+
+if [[ -f `brew --prefix`/bin/hub ]]; then
+  alias git=hub
+fi
 
 if [[ -f `brew --prefix`/etc/bash_completion ]]; then
   source `brew --prefix`/etc/bash_completion
