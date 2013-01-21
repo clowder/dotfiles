@@ -7,13 +7,16 @@ Bundle 'gmarik/vundle'
 
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-powerline'
+  set laststatus=2
 Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
-Bundle 'ack.vim'
 Bundle 'mudge/runspec.vim'
+Bundle 'groenewege/vim-less'
+Bundle 'mileszs/ack.vim'
+  let g:ackprg="ag --nogroup --nocolor --column"
 
 set nocompatible
 

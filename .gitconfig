@@ -9,7 +9,7 @@
   br = !branch_name="$(git branch | grep '*')" && echo ${branch_name/* /}
 
 [core]
-  excludesfile = /Users/Chris/.gitignore_global
+  excludesfile = ~/.gitignore_global
 
 [color]
   branch = auto
