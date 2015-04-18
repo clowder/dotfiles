@@ -1,30 +1,30 @@
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
-Bundle 'altercation/vim-colors-solarized'
-  color solarized
-Bundle 'Lokaltog/vim-powerline'
-  set laststatus=2
-Bundle 'kien/ctrlp.vim'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-surround'
-Bundle 'mudge/runspec.vim'
-Bundle 'groenewege/vim-less'
-Bundle 'mileszs/ack.vim'
-  let g:ackprg="ag --nogroup --nocolor --column"
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'vim-scripts/VimClojure'
-Bundle 'tpope/vim-haml'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'rizzatti/dash.vim'
-Bundle 'mudge/runspec.vim'
-Bundle 'tpope/vim-abolish'
+Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-haml'
+Plugin 'tpope/vim-abolish'
+Plugin 'groenewege/vim-less'
+Plugin 'mileszs/ack.vim'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'vim-scripts/VimClojure'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'rizzatti/dash.vim'
+Plugin 'mudge/runspec.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 set nocompatible
 
@@ -79,14 +79,18 @@ set cc=81
 set encoding=utf-8
 
 " theming
+colorscheme Tomorrow-Night
+set background=dark
 set t_Co=256 " 256 colors
 set term=xterm-256color
 set guifont=Monaco:h12
-set background=dark
 set ttyfast
 
 " always show the status bar, powerline
 set laststatus=2
+
+" user thesilversearcher
+let g:ackprg="ag --nogroup --nocolor --column"
 
 " remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
