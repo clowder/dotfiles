@@ -41,8 +41,23 @@ autotest_config() {
 }
 
 function branch_cleanup_local {
-  for branch in $(git branch --merged master | grep -v master | cut -f2 -d/); do
-    git branch -d ${branch}
+  for branch in $(git branch --merged | grep -v master | cut -f2 -d/); do
+    git branch -D ${branch}
+  done
+}
+
+function agressive_branch_cleanup_local {
+  for branch in $(git branch --no-merged | grep -v master | cut -f2 -d/); do
+    info=`git show --format="authored by %an %ar" $branch | head -n1`
+    read -p "Delete '$branch' $info? (Y/N): " -n 1 -r
+
+    echo ""
+
+    if [[ ! $REPLY =~ ^[yY]$ ]]; then
+      echo "Skipping..."
+    else
+      git branch -D ${branch}
+    fi
   done
 }
 
