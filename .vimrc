@@ -6,6 +6,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 Bundle 'altercation/vim-colors-solarized'
+  color solarized
 Bundle 'Lokaltog/vim-powerline'
   set laststatus=2
 Bundle 'kien/ctrlp.vim'
@@ -17,6 +18,13 @@ Bundle 'mudge/runspec.vim'
 Bundle 'groenewege/vim-less'
 Bundle 'mileszs/ack.vim'
   let g:ackprg="ag --nogroup --nocolor --column"
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'vim-scripts/VimClojure'
+Bundle 'tpope/vim-haml'
+Bundle 'derekwyatt/vim-scala'
+Bundle 'rizzatti/dash.vim'
+Bundle 'mudge/runspec.vim'
+Bundle 'tpope/vim-abolish'
 
 set nocompatible
 
@@ -34,10 +42,10 @@ set tabstop=4
 set autoindent
 
 " make searches case-sensitive only if they contain upper-case characters
-set ignorecase smartcase
+"set ignorecase smartcase
 
 " highlight current line
-set cursorline
+" set cursorline
 
 set switchbuf=useopen
 set numberwidth=5
@@ -65,6 +73,9 @@ filetype plugin indent on
 " line numbers by default
 set number
 
+" subtle reminder to wrap text.
+set cc=81
+
 set encoding=utf-8
 
 " theming
@@ -72,13 +83,16 @@ set t_Co=256 " 256 colors
 set term=xterm-256color
 set guifont=Monaco:h12
 set background=dark
-color solarized
+set ttyfast
 
 " always show the status bar, powerline
 set laststatus=2
 
 " remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
+
+" helping keep my commit messages clean
+autocmd Filetype gitcommit setlocal spell cc=71
 
 " use the system clipboard
 if has("clipboard")
@@ -102,4 +116,6 @@ map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
+
+set wildignore+=*/tmp/*,*/log/*,*.swp
 
