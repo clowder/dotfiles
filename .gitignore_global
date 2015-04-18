@@ -1,6 +1,7 @@
 # Foreman
 .env
 .foreman
+.rspec
 
 # OS X junk files
 .DS_Store
@@ -16,3 +17,9 @@
 # Bundler
 b/
 
+# rbenv
+.ruby-version
+
+# Postgres
+*.dump
+*.backup
