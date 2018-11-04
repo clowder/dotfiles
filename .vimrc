@@ -17,7 +17,7 @@ call minpac#add('tpope/vim-rails')
 
 " prettyness
 call minpac#add('chriskempson/vim-tomorrow-theme')
-call minpac#add('Lokaltog/vim-powerline')
+call minpac#add('itchyny/lightline.vim')
 
 " the rest
 call minpac#add('kien/ctrlp.vim')
