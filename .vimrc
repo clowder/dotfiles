@@ -1,36 +1,32 @@
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+packadd minpac
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+call minpac#init()
 
-Plugin 'tpope/vim-sensible'
+" minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+call minpac#add('tpope/vim-sensible')
 
 " language support
-Plugin 'chrisbra/csv.vim'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'mxw/vim-jsx'
-Plugin 'pangloss/vim-javascript'
-Plugin 'tpope/vim-haml'
-Plugin 'tpope/vim-rails'
+call minpac#add('chrisbra/csv.vim')
+call minpac#add('elixir-lang/vim-elixir')
+call minpac#add('mxw/vim-jsx')
+call minpac#add('pangloss/vim-javascript')
+call minpac#add('tpope/vim-haml')
+call minpac#add('tpope/vim-rails')
 
 " prettyness
-Plugin 'chriskempson/vim-tomorrow-theme'
-Plugin 'Lokaltog/vim-powerline'
+call minpac#add('chriskempson/vim-tomorrow-theme')
+call minpac#add('Lokaltog/vim-powerline')
 
 " the rest
-Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'mudge/runspec.vim'
-Plugin 'rizzatti/dash.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-surround'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call minpac#add('kien/ctrlp.vim')
+call minpac#add('mileszs/ack.vim')
+call minpac#add('mudge/runspec.vim')
+call minpac#add('rizzatti/dash.vim')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('tpope/vim-endwise')
+call minpac#add('tpope/vim-surround')
 
 set nocompatible
 
