@@ -91,8 +91,12 @@ set ttyfast
 " always show the status bar, powerline
 set laststatus=2
 
-" user thesilversearcher
+" make ack.vim use the thesilversearcher
 let g:ackprg="ag --nogroup --nocolor --column"
+
+" make CtrlP use ag for listing files
+let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+let g:ctrlp_use_caching = 0
 
 " remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
@@ -124,4 +128,3 @@ map <Up> <Nop>
 map <Down> <Nop>
 
 set wildignore+=*/tmp/*,*/log/*,*.swp,*/node_modules/*
-
