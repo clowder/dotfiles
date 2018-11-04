@@ -3,24 +3,30 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'tpope/vim-sensible'
+
+" language support
+Plugin 'chrisbra/csv.vim'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'mxw/vim-jsx'
+Plugin 'pangloss/vim-javascript'
+Plugin 'tpope/vim-haml'
+Plugin 'tpope/vim-rails'
+
+" prettyness
 Plugin 'chriskempson/vim-tomorrow-theme'
 Plugin 'Lokaltog/vim-powerline'
+
+" the rest
 Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-haml'
-Plugin 'tpope/vim-abolish'
-Plugin 'groenewege/vim-less'
 Plugin 'mileszs/ack.vim'
-Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'vim-scripts/VimClojure'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'rizzatti/dash.vim'
 Plugin 'mudge/runspec.vim'
+Plugin 'rizzatti/dash.vim'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-surround'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
