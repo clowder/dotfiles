@@ -48,7 +48,7 @@ set tabstop=4
 set autoindent
 
 " make searches case-sensitive only if they contain upper-case characters
-"set ignorecase smartcase
+set ignorecase smartcase
 
 " highlight current line
 " set cursorline
