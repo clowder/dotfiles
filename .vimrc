@@ -127,5 +127,5 @@ map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
 
-set wildignore+=*/tmp/*,*/log/*,*.swp
+set wildignore+=*/tmp/*,*/log/*,*.swp,*/node_modules/*
 
