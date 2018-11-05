@@ -8,12 +8,15 @@ call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('tpope/vim-sensible')
 
 " language support
+call minpac#add('vim-ruby/vim-ruby')
 call minpac#add('chrisbra/csv.vim')
 call minpac#add('elixir-lang/vim-elixir')
 call minpac#add('mxw/vim-jsx')
 call minpac#add('pangloss/vim-javascript')
+call minpac#add('tpope/vim-bundler')
 call minpac#add('tpope/vim-haml')
 call minpac#add('tpope/vim-rails')
+call minpac#add('tpope/vim-rake')
 
 " prettyness
 call minpac#add('chriskempson/vim-tomorrow-theme')
