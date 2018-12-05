@@ -133,3 +133,7 @@ map <Up> <Nop>
 map <Down> <Nop>
 
 set wildignore+=*/tmp/*,*/log/*,*.swp,*/node_modules/*
+
+" new splits appear below or to the right, don't move my eyes
+set splitbelow
+set splitright
