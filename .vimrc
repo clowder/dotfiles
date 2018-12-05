@@ -140,3 +140,6 @@ set splitright
 
 " turn hybrid line numbers on
 :set number relativenumber
+
+" custom shortcuts
+map <Leader>sc :vs db/schema.rb<cr>
