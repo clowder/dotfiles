@@ -137,3 +137,6 @@ set wildignore+=*/tmp/*,*/log/*,*.swp,*/node_modules/*
 " new splits appear below or to the right, don't move my eyes
 set splitbelow
 set splitright
+
+" turn hybrid line numbers on
+:set number relativenumber
