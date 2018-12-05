@@ -19,7 +19,7 @@ call minpac#add('tpope/vim-rails')
 call minpac#add('tpope/vim-rake')
 
 " prettyness
-call minpac#add('chriskempson/vim-tomorrow-theme')
+call minpac#add('chriskempson/base16-vim')
 call minpac#add('itchyny/lightline.vim')
 
 " the rest
@@ -84,12 +84,14 @@ set cc=81
 set encoding=utf-8
 
 " theming
-colorscheme Tomorrow-Night
+colorscheme base16-default-dark
 set background=dark
 set t_Co=256 " 256 colors
 set term=xterm-256color
 set guifont=Monaco:h12
 set ttyfast
+set termguicolors
+let base16colorspace=256
 
 " always show the status bar, powerline
 set laststatus=2
