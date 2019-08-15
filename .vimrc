@@ -23,7 +23,7 @@ call minpac#add('chriskempson/base16-vim')
 call minpac#add('itchyny/lightline.vim')
 
 " the rest
-call minpac#add('kien/ctrlp.vim')
+call minpac#add('junegunn/fzf')
 call minpac#add('mileszs/ack.vim')
 call minpac#add('mudge/runspec.vim')
 call minpac#add('rizzatti/dash.vim')
@@ -143,3 +143,6 @@ set splitright
 
 " custom shortcuts
 map <Leader>sc :vs db/schema.rb<cr>
+
+" RIP ctrl-p
+nnoremap <c-p> :FZF<cr>
