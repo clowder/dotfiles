@@ -1,6 +1,7 @@
 export EDITOR="vim"
-export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.rbenv/bin:$HOME/bin:$PATH"
+export FZF_DEFAULT_COMMAND='ag -g ""'
 export NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.rbenv/bin:$HOME/bin:$PATH"
 
 if [[ -f `brew --prefix`/bin/hub ]]; then
   alias git=hub
