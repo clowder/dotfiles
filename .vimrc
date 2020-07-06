@@ -146,3 +146,6 @@ map <Leader>sc :vs db/schema.rb<cr>
 
 " RIP ctrl-p
 nnoremap <c-p> :FZF<cr>
+
+" disable relative numbering and cursorline for Ruby files to fix slow renders
+autocmd FileType ruby setlocal norelativenumber nocursorline
