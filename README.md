@@ -17,3 +17,8 @@
   ln -sf ~/code/clowder/dotfiles/.inputrc ~/
   ln -sf ~/code/clowder/dotfiles/.vimrc ~/
   ```
+
+3. Install Vim plugins
+  ```
+  :call minpack#update()
+  ```
