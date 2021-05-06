@@ -154,3 +154,6 @@ autocmd FileType ruby setlocal norelativenumber nocursorline
 " enable backups
 set backupdir=~/.vim/backup
 set backup
+
+" move tmp files out of repos
+set directory=~/.vim/tmp

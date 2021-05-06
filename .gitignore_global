@@ -6,9 +6,6 @@
 # OS X junk files
 .DS_Store
 
-# Vim
-*.sw?
-
 # Pow
 .powenv
 
