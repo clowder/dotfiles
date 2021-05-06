@@ -8,7 +8,7 @@
 2. Symlink
     ```shell
     $ ln -sf ~/code/clowder/dotfiles/.agignore ~/
-    $ ln -sf ~/code/clowder/dotfiles/.bash_profile ~/
+    $ ln -sf ~/code/clowder/dotfiles/.zshrc ~/
     $ ln -sf ~/code/clowder/dotfiles/.gemrc ~/
     $ ln -sf ~/code/clowder/dotfiles/.gitconfig ~/
     $ ln -sf ~/code/clowder/dotfiles/.gitignore_global ~/
