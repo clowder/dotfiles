@@ -1,23 +1,27 @@
 # Installation
 
-1. Install minpac
+1. Install Homebrew'd packages
+    ```shell
+    $ brew bundle
+    ```
+2. Install minpac
     ```shell
     $ mkdir -p ~/.vim/pack/minpac/opt
     $ git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
     ```
-2. Symlink
+3. Symlink
     ```shell
-    $ ln -sf ~/code/clowder/dotfiles/.agignore ~/
-    $ ln -sf ~/code/clowder/dotfiles/.zshrc ~/
-    $ ln -sf ~/code/clowder/dotfiles/.gemrc ~/
-    $ ln -sf ~/code/clowder/dotfiles/.gitconfig ~/
-    $ ln -sf ~/code/clowder/dotfiles/.gitignore_global ~/
-    $ ln -sf ~/code/clowder/dotfiles/.hammerspoon ~/
-    $ ln -sf ~/code/clowder/dotfiles/.hushlogin ~/
-    $ ln -sf ~/code/clowder/dotfiles/.inputrc ~/
-    $ ln -sf ~/code/clowder/dotfiles/.vimrc ~/
+    $ ln -sf $PWD/.agignore ~/
+    $ ln -sf $PWD/.zshrc ~/
+    $ ln -sf $PWD/.gemrc ~/
+    $ ln -sf $PWD/.gitconfig ~/
+    $ ln -sf $PWD/.gitignore_global ~/
+    $ ln -sf $PWD/.hammerspoon ~/
+    $ ln -sf $PWD/.hushlogin ~/
+    $ ln -sf $PWD/.inputrc ~/
+    $ ln -sf $PWD/.vimrc ~/
     ```
-3. Install Vim plugins
+4. Install Vim plugins
     ```vim
-    :call minpack#update()
+    :call minpac#update()
     ```
