@@ -1,7 +1,7 @@
 # Foreman
 .env
 .foreman
-.rspec
+.rspec-local
 
 # OS X junk files
 .DS_Store
