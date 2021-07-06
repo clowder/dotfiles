@@ -21,7 +21,12 @@
     $ ln -sf $PWD/.inputrc ~/
     $ ln -sf $PWD/.vimrc ~/
     ```
-4. Install Vim plugins
+4. Create some local cruft:
+    ```shell
+    $ touch ~/.zshrc_local
+    $ mkdir -p ~/.vim/{tmp,backup}
+    ```
+5. Install Vim plugins
     ```vim
     :call minpac#update()
     ```
