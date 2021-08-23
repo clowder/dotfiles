@@ -50,9 +50,6 @@ set autoindent
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
 
-" highlight current line
-" set cursorline
-
 set switchbuf=useopen
 set numberwidth=5
 set showtabline=2
@@ -135,17 +132,11 @@ set wildignore+=*/tmp/*,*/log/*,*.swp,*/node_modules/*
 set splitbelow
 set splitright
 
-" turn hybrid line numbers on
-:set number relativenumber
-
 " custom shortcuts
 map <Leader>sc :vs db/schema.rb<cr>
 
 " RIP ctrl-p
 nnoremap <c-p> :FZF<cr>
-
-" disable relative numbering and cursorline for Ruby files to fix slow renders
-autocmd FileType ruby setlocal norelativenumber nocursorline
 
 " enable backups
 set backupdir=~/.vim/backup
