@@ -24,7 +24,7 @@
 4. Create some local cruft:
     ```shell
     $ touch ~/.zshrc_local
-    $ mkdir -p ~/.vim/{tmp,backup}
+    $ mkdir -p ~/.vim/{tmp,backup,undo}
     ```
 5. Install Vim plugins
     ```vim

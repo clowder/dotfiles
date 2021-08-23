@@ -156,4 +156,8 @@ set backupdir=~/.vim/backup
 set backup
 
 " move tmp files out of repos
-set directory=~/.vim/tmp
+set directory=$HOME/.vim/tmp
+
+" persistent undo
+set undodir=$HOME/.vim/undo
+set undofile
