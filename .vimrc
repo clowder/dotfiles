@@ -100,10 +100,6 @@ set laststatus=2
 " make ack.vim use the thesilversearcher
 let g:ackprg="ag --nogroup --nocolor --column"
 
-" make CtrlP use ag for listing files
-let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
-let g:ctrlp_use_caching = 0
-
 " remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
 
