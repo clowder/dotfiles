@@ -30,3 +30,6 @@
     ```vim
     :call minpac#update()
     ```
+6. Install [Base16 into Terminal.app][1]
+
+[1]: https://github.com/vbwx/base16-terminal-app
