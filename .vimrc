@@ -84,12 +84,6 @@ set encoding=utf-8
 " theming
 colorscheme base16-default-dark
 set background=dark
-set t_Co=256 " 256 colors
-set term=xterm-256color
-set guifont=Monaco:h12
-set ttyfast
-set termguicolors
-let base16colorspace=256
 
 " always show the status bar, powerline
 set laststatus=2
