@@ -16,6 +16,10 @@ export CLICOLOR="Yes" EDITOR="vim"
 # Use the_siver_searcher to generate file lists for fzf
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
+# Turn OFF Homebrew auto-updating
+export HOMEBREW_NO_AUTO_UPDATE=1
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Use arrow keys with a partially completed command to search history
 bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
@@ -23,12 +27,15 @@ bindkey '^[[B' history-beginning-search-forward
 # Use rbenv for managing Ruby versions
 eval "$(rbenv init - zsh)"
 
+# Postgres tools on our path
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+
 # Enable autocompletion
 autoload -Uz compinit
 compinit -C
 
-# Optional local config
-source ~/.zshrc_local
+export N_PREFIX="$HOME/.n"
+export PATH="$N_PREFIX/bin:$PATH"
 
 # ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed
 # and these are never upgraded.
@@ -39,3 +46,7 @@ source ~/.zshrc_local
 # Note: this may interfere with building old versions of Ruby (e.g <2.4) that use
 # OpenSSL <1.1.
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+
+# Optional local config
+source ~/.zshrc_local
+
