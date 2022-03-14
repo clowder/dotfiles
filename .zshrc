@@ -13,8 +13,8 @@ RPROMPT='%{%F{red}%}${vcs_info_msg_0_}%{%f%}'
 
 export CLICOLOR="Yes" EDITOR="vim"
 
-# Use the_siver_searcher to generate file lists for fzf
-export FZF_DEFAULT_COMMAND='ag -g ""'
+# Use ripgrep to generate file lists for fzf
+export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs --vimgrep'
 
 # Turn OFF Homebrew auto-updating
 export HOMEBREW_NO_AUTO_UPDATE=1

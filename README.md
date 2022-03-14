@@ -20,6 +20,7 @@
     $ ln -sf $PWD/.hushlogin ~/
     $ ln -sf $PWD/.inputrc ~/
     $ ln -sf $PWD/.vimrc ~/
+    $ ln -sf $PWD/.rgignore ~/
     ```
 4. Create some local cruft:
     ```shell
