@@ -64,9 +64,6 @@ set showcmd
 " Enable highlighting for syntax
 syntax on
 
-" The Silver Searcher
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
 " Enable file type detection.
 " Use the default filetype settings, so that mail gets 'tw' set to 72,
 " 'cindent' is on in C files, etc.
@@ -87,9 +84,6 @@ set background=dark
 
 " always show the status bar, powerline
 set laststatus=2
-
-" make ack.vim use the thesilversearcher
-let g:ackprg="ag --nogroup --nocolor --column"
 
 " remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
@@ -142,3 +136,6 @@ set directory=$HOME/.vim/tmp
 " persistent undo
 set undodir=$HOME/.vim/undo
 set undofile
+
+" ack with ripgrep
+let g:ackprg = 'rg --vimgrep --no-heading --smart-case --hidden'

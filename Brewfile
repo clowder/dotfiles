@@ -1,16 +1,16 @@
 tap "heroku/brew"
 tap "stripe/stripe-cli"
 
+brew "balena-cli"
 brew "fzf"
 brew "gh"
 brew "git-extras"
 brew "heroku/brew/heroku"
 brew "rbenv"
+brew "ripgrep"
 brew "ruby-build"
 brew "stripe/stripe-cli/stripe"
-brew "the_silver_searcher"
 brew "vim"
-brew "balena-cli"
 
 cask "1password"
 cask "aws-vault"
