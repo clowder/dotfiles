@@ -47,6 +47,10 @@ export PATH="$N_PREFIX/bin:$PATH"
 # OpenSSL <1.1.
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
+# https://bugs.ruby-lang.org/issues/14009
+# https://github.com/rails/rails/issues/38560
+# https://github.com/rbenv/ruby-build/issues/1385
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
 # Optional local config
 source ~/.zshrc_local
-
