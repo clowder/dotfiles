@@ -1,25 +1,33 @@
-[user]
-  name = Chris Lowder
-  email = clowder@gmail.com
-
 [alias]
-  ci = commit
-  co = checkout
-  st = status
-  br = !branch_name="$(git branch | grep '*')" && echo ${branch_name/* /}
+    ci = commit
+    co = checkout
+    st = status
+    br = !branch_name="$(git branch | grep '*')" && echo ${branch_name/* /}
+    fush = push --force-with-lease
 
 [core]
-  excludesfile = ~/.gitignore_global
+    excludesfile = ~/.gitignore_global
+    precomposeUnicode = true
 
 [color]
-  branch = auto
-  diff = auto
-  status = auto
-
-[github]
-  user = clowder
+    branch = auto
+    diff = auto
+    status = auto
 
 [branch]
-  autosetuprebase = always
+    autosetuprebase = always
+
 [init]
-	defaultBranch = main
+    defaultBranch = main
+
+[commit]
+    gpgsign = true
+
+[gpg]
+    format = ssh
+
+[push]
+    autoSetupRemote = true
+
+[include]
+    path = ~/.gitconfig_local
