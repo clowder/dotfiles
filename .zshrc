@@ -16,16 +16,20 @@ export CLICOLOR="Yes" EDITOR="vim"
 # Use ripgrep to generate file lists for fzf
 export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs --vimgrep'
 
-# Turn OFF Homebrew auto-updating
-export HOMEBREW_NO_AUTO_UPDATE=1
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Use arrow keys with a partially completed command to search history
 bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
 
-# Use rbenv for managing Ruby versions
+# Language version managers
 eval "$(rbenv init - zsh)"
+eval "$(nodenv init -)"
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # Postgres tools on our path
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
@@ -33,9 +37,6 @@ export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 # Enable autocompletion
 autoload -Uz compinit
 compinit -C
-
-export N_PREFIX="$HOME/.n"
-export PATH="$N_PREFIX/bin:$PATH"
 
 # ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed
 # and these are never upgraded.

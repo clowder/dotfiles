@@ -12,9 +12,6 @@
 # Bundler
 b/
 
-# rbenv
-.ruby-version
-
 # Postgres
 *.dump
 *.backup
