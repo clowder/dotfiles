@@ -143,3 +143,13 @@ set undofile
 
 " ack with ripgrep
 let g:ackprg = 'rg --vimgrep --no-heading --smart-case --hidden'
+
+" show non-printable chars
+set list
+
+" append visual column count when it differs from the byte count
+let g:lightline = {
+      \ 'component': {
+      \   'lineinfo': '%3l:%-2c%V',
+      \ },
+      \ }
