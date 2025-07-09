@@ -43,5 +43,7 @@ compinit -C
 # https://github.com/rbenv/ruby-build/issues/1385
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
+alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
+
 # Optional local config
 source ~/.zshrc_local
