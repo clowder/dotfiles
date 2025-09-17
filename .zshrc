@@ -23,13 +23,8 @@ bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
 
 # Language version managers
-eval "$(rbenv init - zsh)"
-eval "$(nodenv init -)"
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+export MISE_IDIOMATIC_VERSION_FILE_ENABLE_TOOLS="ruby,node"
+eval "$(mise activate zsh)"
 
 # Postgres tools on our path
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
