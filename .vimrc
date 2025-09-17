@@ -29,6 +29,7 @@ call minpac#add('itchyny/lightline.vim')
 
 " the rest
 call minpac#add('junegunn/fzf')
+call minpac#add('junegunn/fzf.vim')
 call minpac#add('mileszs/ack.vim')
 call minpac#add('mudge/runspec.vim')
 call minpac#add('rizzatti/dash.vim')
