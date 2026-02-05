@@ -96,8 +96,8 @@ set laststatus=2
 " remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
 
-" helping keep my commit messages clean
 autocmd Filetype gitcommit setlocal spell cc=71
+autocmd Filetype sh setlocal noexpandtab tabstop=4 shiftwidth=4
 
 " use the system clipboard
 if has("clipboard")
