@@ -28,7 +28,6 @@ call minpac#add('chriskempson/base16-vim')
 call minpac#add('itchyny/lightline.vim')
 
 " the rest
-call minpac#add('ggml-org/llama.vim')
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('mileszs/ack.vim')
@@ -155,11 +154,4 @@ let g:lightline = {
       \ 'component': {
       \   'lineinfo': '%3l:%-2c%V',
       \ },
-      \ }
-
-" llama.vim loads
-let g:llama_config = {
-      \ 'show_info': 0,
-      \ 'keymap_accept_line': "<Tab>",
-      \ 'keymap_accept_full': "<S-Tab>"
       \ }
