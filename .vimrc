@@ -104,17 +104,21 @@ if has("clipboard")
   set clipboard=unnamed
 endif
 
+" completion settings
+set completeopt=menuone,popup,noselect
+set complete=.,w,b,u,t
+
 " indent if we're at the beginning of a line. Else, do completion.
 function! InsertTabWrapper()
     let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
         return "\<tab>"
     else
-        return "\<c-p>"
+        return "\<c-n>"
     endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <s-tab> <c-n>
+inoremap <s-tab> <c-p>
 
 " disable the arrow keys
 map <Left> <Nop>
