@@ -84,9 +84,11 @@ set cc=81
 
 set encoding=utf-8
 
+" true color
+set termguicolors
+
 " theming
 colorscheme base16-default-dark
-set background=dark
 
 " always show the status bar, powerline
 set laststatus=2
