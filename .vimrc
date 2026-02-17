@@ -24,8 +24,8 @@ call minpac#add('tpope/vim-rake')
 call minpac#add('vim-ruby/vim-ruby')
 
 " prettyness
-call minpac#add('chriskempson/base16-vim')
 call minpac#add('itchyny/lightline.vim')
+call minpac#add('sonph/onehalf', {'subdir': 'vim'})
 
 " the rest
 call minpac#add('junegunn/fzf')
@@ -88,7 +88,7 @@ set encoding=utf-8
 set termguicolors
 
 " theming
-colorscheme base16-default-dark
+colorscheme onehalfdark
 
 " always show the status bar, powerline
 set laststatus=2
