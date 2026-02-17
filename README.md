@@ -11,16 +11,7 @@
     ```
 3. Symlink
     ```shell
-    $ ln -sf $PWD/.agignore ~/
-    $ ln -sf $PWD/.zshrc ~/
-    $ ln -sf $PWD/.gemrc ~/
-    $ ln -sf $PWD/.gitconfig ~/
-    $ ln -sf $PWD/.gitignore_global ~/
-    $ ln -sf $PWD/.hammerspoon ~/
-    $ ln -sf $PWD/.hushlogin ~/
-    $ ln -sf $PWD/.inputrc ~/
-    $ ln -sf $PWD/.vimrc ~/
-    $ ln -sf $PWD/.rgignore ~/
+    stow -vv --target=$HOME zsh git vim misc
     ```
 4. Create some local cruft:
     ```shell

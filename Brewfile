@@ -13,6 +13,7 @@ brew "rbenv"
 brew "ripgrep"
 brew "ruby-build"
 brew "rust"
+brew "stow"
 brew "stripe/stripe-cli/stripe"
 brew "vim"
 
