@@ -23,7 +23,6 @@ bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
 
 # Language version managers
-export MISE_IDIOMATIC_VERSION_FILE_ENABLE_TOOLS="ruby,node"
 eval "$(mise activate zsh)"
 
 # Postgres tools on our path
