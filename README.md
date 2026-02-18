@@ -11,7 +11,7 @@
     ```
 3. Symlink
     ```shell
-    stow -vv --target=$HOME zsh git vim misc
+    stow -vv --target=$HOME zsh git vim mise misc
     ```
 4. Create some local cruft:
     ```shell
