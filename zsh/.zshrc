@@ -25,6 +25,9 @@ bindkey '^[[B' history-beginning-search-forward
 # Language version managers
 eval "$(mise activate zsh)"
 
+# User scripts
+export PATH="$HOME/.local/bin:$PATH"
+
 # Postgres tools on our path
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 

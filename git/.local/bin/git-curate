@@ -1,0 +1,267 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Colors
+readonly DIM=$'\033[2m'
+readonly BOLD=$'\033[1m'
+readonly YELLOW=$'\033[33m'
+readonly RESET=$'\033[0m'
+
+# Terminal state
+saved_tty=""
+tui_active=false
+LINES=24
+COLUMNS=80
+
+cleanup() {
+  if [[ "$tui_active" == true ]]; then
+    printf '\e[?25h'    # show cursor
+    printf '\e[?1049l'  # exit alternate screen
+  fi
+  if [[ -n "$saved_tty" ]]; then
+    stty "$saved_tty" 2>/dev/null
+  fi
+}
+
+trap cleanup EXIT
+
+get_term_size() {
+  read -r LINES COLUMNS < <(stty size)
+}
+
+# Gather branch data
+current_branch=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
+
+branches=()
+while IFS= read -r b; do
+  if [[ "$b" != "$current_branch" ]]; then
+    branches+=("$b")
+  fi
+done < <(git branch --format='%(committerdate:unix) %(refname:short)' --sort=committerdate | awk '{print $2}')
+
+if [[ ${#branches[@]} -eq 0 ]]; then
+  printf 'No other branches to curate.\n'
+  exit 0
+fi
+
+# Pre-compute branch metadata
+declare -a commit_info merged_status upstream_status
+
+for b in "${branches[@]}"; do
+  commit_info+=("$(git log -1 --format='%h %s (%cr)' "$b" 2>/dev/null || printf 'unknown')")
+
+  if git merge-base --is-ancestor "$b" HEAD 2>/dev/null; then
+    merged_status+=("✓")
+  else
+    merged_status+=("✗")
+  fi
+
+  upstream=$(git rev-parse --abbrev-ref "$b@{upstream}" 2>/dev/null || true)
+  if [[ -z "$upstream" ]]; then
+    upstream_status+=("✗")
+  else
+    ahead=$(git rev-list --count "$upstream..$b" 2>/dev/null || printf '0')
+    behind=$(git rev-list --count "$b..$upstream" 2>/dev/null || printf '0')
+    upstream_status+=("↑${ahead} ↓${behind}")
+  fi
+done
+
+# Static column widths (display columns, not bytes)
+max_branch=6
+max_merged=6
+max_upstream=8
+for i in "${!branches[@]}"; do
+  if (( ${#branches[$i]} > max_branch )); then max_branch=${#branches[$i]}; fi
+done
+
+# TUI state
+cursor=0
+last_count=${#branches[@]}
+declare -a checked
+for i in "${!branches[@]}"; do
+  checked[i]=0
+done
+
+# Pad a string to exactly W characters, truncating if needed.
+pad() {
+  local -n _out=$1
+  local str=$2 width=$3
+  local len=${#str}
+  if (( len >= width )); then
+    _out=${str:0:width}
+  else
+    printf -v _out '%-*s' "$width" "$str"
+  fi
+}
+
+# Column positions for merged and upstream (set by build_line, used by render)
+col_merged=0
+col_upstream=0
+
+# Build a single display line from column values, using cursor positioning
+# for the last two columns to avoid unicode width issues.
+build_line() {
+  local -n _line_out=$1
+  local prefix=$2 branch=$3 commit=$4 merged=$5 upstream=$6
+  # Commit column gets remaining space
+  local commit_w=$((COLUMNS - 11 - max_branch - max_merged - max_upstream))
+  if (( commit_w < 11 )); then commit_w=11; fi
+
+  col_merged=$((5 + max_branch + 2 + commit_w + 2))
+  col_upstream=$((col_merged + max_merged + 2))
+
+  local p b c
+  pad p "$prefix" 5
+  pad b "$branch" "$max_branch"
+  pad c "$commit" "$commit_w"
+
+  # Use absolute cursor positioning (\e[<col>G) for merged/upstream columns
+  _line_out="${p}${b}  ${c}\e[${col_merged}G${merged}\e[${col_upstream}G${upstream}"
+}
+
+render() {
+  get_term_size
+
+  # Header at line 1
+  local hdr
+  build_line hdr "     " "Branch" "Last commit" "Merged" "Upstream"
+  printf '\e[1;1H\e[2K%s%b%s' "$DIM" "$hdr" "$RESET"
+
+  # Branch rows starting at line 2
+  local visible=$((LINES - 2))
+  for i in "${!branches[@]}"; do
+    if (( i >= visible )); then break; fi
+
+    local prefix="[ ]  "
+    if (( checked[i] )); then prefix="[x]  "; fi
+
+    local row
+    build_line row "$prefix" "${branches[$i]}" "${commit_info[$i]}" "${merged_status[$i]}" "${upstream_status[$i]}"
+
+    printf '\e[%s;1H\e[2K' "$((i + 2))"
+    if (( i == cursor )); then
+      printf '%s%b%s' "$BOLD" "$row" "$RESET"
+    else
+      printf '%b' "$row"
+    fi
+  done
+
+  # Clear leftover lines
+  local drawn=${#branches[@]}
+  if (( drawn > visible )); then drawn=$visible; fi
+  local r
+  for (( r = drawn; r < visible; r++ )); do
+    printf '\e[%s;1H\e[2K' "$((r + 2))"
+  done
+
+  # Status bar at last line
+  printf '\e[%s;1H\e[2K%s j/↓ k/↑ move  x/<Space> toggle  D delete  q/<Esc> quit %s' "$LINES" "$DIM" "$RESET"
+}
+
+KEY=""
+read_key() {
+  local char
+  IFS= read -rsn1 char
+  if [[ "$char" == $'\x1b' ]]; then
+    local seq
+    IFS= read -rsn2 -t 0.01 seq || true
+    case "$seq" in
+      '[A') KEY=UP ; return ;;
+      '[B') KEY=DOWN ; return ;;
+    esac
+    KEY=ESC
+    return
+  fi
+  KEY=$char
+}
+
+do_delete() {
+  tui_active=false
+  printf '\e[?25h'
+  printf '\e[?1049l'
+  if [[ -n "$saved_tty" ]]; then
+    stty "$saved_tty" 2>/dev/null
+  fi
+
+  local selected=()
+  for i in "${!branches[@]}"; do
+    if (( checked[i] )); then selected+=("${branches[$i]}"); fi
+  done
+
+  if [[ ${#selected[@]} -eq 0 ]]; then
+    printf 'No branches selected.\n'
+    exit 0
+  fi
+
+  printf 'Branches to delete:\n'
+  for b in "${selected[@]}"; do
+    printf '  %s\n' "$b"
+  done
+  printf '\n'
+
+  printf 'Are you sure? [y/n] '
+  read -r confirm
+  if [[ "${confirm,,}" != y ]]; then
+    printf 'Aborted.\n'
+    exit 0
+  fi
+
+  for b in "${selected[@]}"; do
+    # Check if branch is checked out in a worktree
+    local wt_path=""
+    wt_path=$(git worktree list --porcelain | awk -v branch="$b" '
+      /^worktree / { wt = substr($0, 10) }
+      /^branch / { if (substr($0, 8) == "refs/heads/" branch) print wt }
+    ')
+
+    if [[ -n "$wt_path" ]]; then
+      if ! git worktree remove "$wt_path" 2>&1; then
+        printf '%sWarning: could not remove worktree for %s, skipping%s\n' "$YELLOW" "$b" "$RESET"
+        continue
+      fi
+    fi
+
+    if git merge-base --is-ancestor "$b" HEAD 2>/dev/null; then
+      if ! git branch -d "$b" 2>&1; then
+        printf '%sWarning: could not delete %s%s\n' "$YELLOW" "$b" "$RESET"
+      fi
+    else
+      printf 'Force-deleting unmerged branch %s\n' "$b"
+      if ! git branch -D "$b" 2>&1; then
+        printf '%sWarning: could not delete %s%s\n' "$YELLOW" "$b" "$RESET"
+      fi
+    fi
+  done
+
+  exit 0
+}
+
+# Enter TUI
+saved_tty=$(stty -g)
+get_term_size
+tui_active=true
+printf '\e[?1049h'  # alternate screen
+printf '\e[?25l'    # hide cursor
+stty raw -echo
+
+while true; do
+  render
+  read_key
+  case "$KEY" in
+    j|DOWN)
+      if (( cursor < last_count - 1 )); then cursor=$((cursor + 1)); fi
+      ;;
+    k|UP)
+      if (( cursor > 0 )); then cursor=$((cursor - 1)); fi
+      ;;
+    x|' ')
+      (( checked[cursor] ^= 1 )) || true
+      ;;
+    D)
+      do_delete
+      ;;
+    q|ESC)
+      exit 0
+      ;;
+  esac
+done
