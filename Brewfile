@@ -1,6 +1,7 @@
 tap "heroku/brew"
 tap "stripe/stripe-cli"
 
+brew "bash"
 brew "fzf"
 brew "gh"
 brew "git-extras"
