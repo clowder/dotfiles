@@ -141,11 +141,15 @@ read_key() {
   if [[ "$char" == $'\x1b' ]]; then
     local seq
     IFS= read -rsn2 -t 0.01 seq || true
+    if [[ -z "$seq" ]]; then
+      _key=ESC
+      return
+    fi
     case "$seq" in
-      '[A') _key=UP ; return ;;
-      '[B') _key=DOWN ; return ;;
+      '[A') _key=UP ;;
+      '[B') _key=DOWN ;;
+      *)    _key=IGNORE ;;
     esac
-    _key=ESC
     return
   fi
   _key=$char
