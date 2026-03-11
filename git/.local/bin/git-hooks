@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+HOOKS_SOURCE_DIR="${HOME}/.local/share/git-hooks"
+
+die() {
+  echo "error: $1" >&2
+  exit 1
+}
+
+git_dir=$(git rev-parse --git-dir 2>/dev/null) || die "not a git repository"
+HOOKS_DIR="${git_dir}/hooks"
+
+cmd_install() {
+  [[ -d "$HOOKS_SOURCE_DIR" ]] || die "hooks source not found: ${HOOKS_SOURCE_DIR}"
+  mkdir -p "$HOOKS_DIR"
+
+  for src in "${HOOKS_SOURCE_DIR}"/*; do
+    [[ -e "$src" ]] || continue
+    local dest="${HOOKS_DIR}/${src##*/}"
+
+    if [[ -e "$dest" ]] && ! [[ -L "$dest" ]]; then
+      echo "${dest} -| skipped, not managed by git-hooks" >&2
+      continue
+    fi
+
+    ln -svf "$src" "$dest"
+  done
+}
+
+cmd_uninstall() {
+  local removed=0
+  for src in "${HOOKS_SOURCE_DIR}"/*; do
+    [[ -e "$src" ]] || continue
+    local dest="${HOOKS_DIR}/${src##*/}"
+
+    if [[ -L "$dest" ]] && [[ $(readlink "$dest") == "${HOOKS_SOURCE_DIR}/"* ]]; then
+      rm -v "$dest"
+      ((removed++))
+    fi
+  done
+
+  if ((removed == 0)); then
+    echo "Nothing to do"
+  fi
+}
+
+case "${1:-}" in
+  install)   cmd_install ;;
+  uninstall) cmd_uninstall ;;
+  *)
+    cat <<EOF
+Usage: git hooks <command>
+
+Commands:
+  install     Symlink hooks into the current repository
+  uninstall   Remove managed symlinks from the current repository
+EOF
+    exit 1
+    ;;
+esac
