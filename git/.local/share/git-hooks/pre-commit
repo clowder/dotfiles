@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! git diff --cached --diff-filter=d --name-only | typos --file-list -; then
+  cat <<'EOF'
+
+Commit aborted due to typos. To autocorrect:
+
+  git diff --cached --diff-filter=d --name-only | typos --write-changes --file-list -
+
+EOF
+  exit 1
+fi
