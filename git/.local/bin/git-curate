@@ -28,7 +28,7 @@ get_term_size() {
 # Gather branch data
 current_branch=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
 
-# Merged branches (used to populate merged_status)
+# Merged branches
 declare -A merged_set
 while IFS= read -r b; do merged_set[$b]=1; done < <(git branch --merged HEAD --format='%(refname:short)')
 
@@ -39,12 +39,6 @@ while IFS=$'\x1f' read -r b upstream track info; do
 
   branches+=("$b")
   commit_info+=("$info")
-
-  if [[ -v "merged_set[$b]" ]]; then
-    merged_status+=("✓")
-  else
-    merged_status+=("✗")
-  fi
 
   if [[ -z "$upstream" ]]; then
     upstream_status+=("none")
@@ -118,7 +112,8 @@ render() {
     pad col_prefix "$prefix" 5
     pad col_branch "${branches[$i]}" "$max_branch"
     pad col_commit "${commit_info[$i]}" "$commit_width"
-    local row="${col_prefix}${col_branch}  ${col_commit}${move_merged}${merged_status[$i]}${move_upstream}${upstream_status[$i]}"
+    local merged; if [[ -v "merged_set[${branches[$i]}]" ]]; then merged="yes"; else merged="no"; fi
+    local row="${col_prefix}${col_branch}  ${col_commit}${move_merged}${merged}${move_upstream}${upstream_status[$i]}"
 
     printf '\e[%s;1H\e[2K' "$((i + 2))"
     if (( i == cursor )); then
