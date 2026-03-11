@@ -9,21 +9,17 @@ readonly RESET=$'\033[0m'
 
 # Terminal state
 saved_tty=""
-tui_active=false
 LINES=24
 COLUMNS=80
 
-cleanup() {
-  if [[ "$tui_active" == true ]]; then
-    printf '\e[?25h'    # show cursor
-    printf '\e[?1049l'  # exit alternate screen
-  fi
-  if [[ -n "$saved_tty" ]]; then
-    stty "$saved_tty" 2>/dev/null
-  fi
+teardown_tui() {
+  [[ -n "$saved_tty" ]] || return 0
+  printf '\e[?25h\e[?1049l'  # show cursor, exit alternate screen
+  stty "$saved_tty" 2>/dev/null
+  saved_tty=""
 }
 
-trap cleanup EXIT
+trap teardown_tui EXIT
 
 get_term_size() {
   read -r LINES COLUMNS < <(stty size)
@@ -32,39 +28,41 @@ get_term_size() {
 # Gather branch data
 current_branch=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
 
-branches=()
-while IFS= read -r b; do
-  if [[ "$b" != "$current_branch" ]]; then
-    branches+=("$b")
-  fi
-done < <(git branch --format='%(committerdate:unix) %(refname:short)' --sort=committerdate | awk '{print $2}')
+# Merged branches (used to populate merged_status)
+declare -A merged_set
+while IFS= read -r b; do merged_set[$b]=1; done < <(git branch --merged HEAD --format='%(refname:short)')
 
-if [[ ${#branches[@]} -eq 0 ]]; then
-  printf 'No other branches to curate.\n'
-  exit 0
-fi
+# Single git call gathers all per-branch metadata.
+# subject is last because it may contain tabs.
+while IFS=$'\x1f' read -r b upstream track info; do
+  [[ "$b" != "$current_branch" ]] || continue
 
-# Pre-compute branch metadata
-declare -a commit_info merged_status upstream_status
+  branches+=("$b")
+  commit_info+=("$info")
 
-for b in "${branches[@]}"; do
-  commit_info+=("$(git log -1 --format='%h %s (%cr)' "$b" 2>/dev/null || printf 'unknown')")
-
-  if git merge-base --is-ancestor "$b" HEAD 2>/dev/null; then
+  if [[ -v "merged_set[$b]" ]]; then
     merged_status+=("✓")
   else
     merged_status+=("✗")
   fi
 
-  upstream=$(git rev-parse --abbrev-ref "$b@{upstream}" 2>/dev/null || true)
   if [[ -z "$upstream" ]]; then
-    upstream_status+=("✗")
+    upstream_status+=("none")
+  elif [[ -z "$track" ]]; then
+    upstream_status+=("up-to-date")
   else
-    ahead=$(git rev-list --count "$upstream..$b" 2>/dev/null || printf '0')
-    behind=$(git rev-list --count "$b..$upstream" 2>/dev/null || printf '0')
-    upstream_status+=("↑${ahead} ↓${behind}")
+    upstream_status+=("${track//[\[\]]/}")
   fi
-done
+
+  checked+=( 0 )
+done < <(git for-each-ref \
+  --format="%(refname:short)"$'\x1f'"%(upstream:short)"$'\x1f'"%(upstream:track)"$'\x1f'"%(objectname:short) %(subject) (%(creatordate:relative))" \
+  --sort=committerdate refs/heads/)
+
+if [[ ${#branches[@]} -eq 0 ]]; then
+  printf 'No other branches to curate.\n'
+  exit 0
+fi
 
 # Static column widths (display columns, not bytes)
 max_branch=6
@@ -72,15 +70,11 @@ max_merged=6
 max_upstream=8
 for i in "${!branches[@]}"; do
   if (( ${#branches[$i]} > max_branch )); then max_branch=${#branches[$i]}; fi
+  if (( ${#upstream_status[$i]} > max_upstream )); then max_upstream=${#upstream_status[$i]}; fi
 done
 
 # TUI state
 cursor=0
-last_count=${#branches[@]}
-declare -a checked
-for i in "${!branches[@]}"; do
-  checked[i]=0
-done
 
 # Pad a string to exactly W characters, truncating if needed.
 pad() {
@@ -94,38 +88,24 @@ pad() {
   fi
 }
 
-# Column positions for merged and upstream (set by build_line, used by render)
-col_merged=0
-col_upstream=0
-
-# Build a single display line from column values, using cursor positioning
-# for the last two columns to avoid unicode width issues.
-build_line() {
-  local -n _line_out=$1
-  local prefix=$2 branch=$3 commit=$4 merged=$5 upstream=$6
-  # Commit column gets remaining space
-  local commit_w=$((COLUMNS - 11 - max_branch - max_merged - max_upstream))
-  if (( commit_w < 11 )); then commit_w=11; fi
-
-  col_merged=$((5 + max_branch + 2 + commit_w + 2))
-  col_upstream=$((col_merged + max_merged + 2))
-
-  local p b c
-  pad p "$prefix" 5
-  pad b "$branch" "$max_branch"
-  pad c "$commit" "$commit_w"
-
-  # Use absolute cursor positioning (\e[<col>G) for merged/upstream columns
-  _line_out="${p}${b}  ${c}\e[${col_merged}G${merged}\e[${col_upstream}G${upstream}"
-}
-
 render() {
+  local i
   get_term_size
 
+  # Compute column positions once per render
+  local commit_width=$((COLUMNS - 11 - max_branch - max_merged - max_upstream))
+  if (( commit_width < 11 )); then commit_width=11; fi
+  local merged_start=$((5 + max_branch + 2 + commit_width + 2))
+  local upstream_start=$((merged_start + max_merged + 2))
+  local move_merged=$'\e['"${merged_start}"'G'
+  local move_upstream=$'\e['"${upstream_start}"'G'
+
   # Header at line 1
-  local hdr
-  build_line hdr "     " "Branch" "Last commit" "Merged" "Upstream"
-  printf '\e[1;1H\e[2K%s%b%s' "$DIM" "$hdr" "$RESET"
+  local col_branch col_commit
+  local col_prefix="     "
+  pad col_branch "Branch" "$max_branch"
+  pad col_commit "Last commit" "$commit_width"
+  printf '\e[1;1H\e[2K%s%s%s' "$DIM" "${col_prefix}${col_branch}  ${col_commit}${move_merged}Merged${move_upstream}Upstream" "$RESET"
 
   # Branch rows starting at line 2
   local visible=$((LINES - 2))
@@ -135,53 +115,45 @@ render() {
     local prefix="[ ]  "
     if (( checked[i] )); then prefix="[x]  "; fi
 
-    local row
-    build_line row "$prefix" "${branches[$i]}" "${commit_info[$i]}" "${merged_status[$i]}" "${upstream_status[$i]}"
+    pad col_prefix "$prefix" 5
+    pad col_branch "${branches[$i]}" "$max_branch"
+    pad col_commit "${commit_info[$i]}" "$commit_width"
+    local row="${col_prefix}${col_branch}  ${col_commit}${move_merged}${merged_status[$i]}${move_upstream}${upstream_status[$i]}"
 
     printf '\e[%s;1H\e[2K' "$((i + 2))"
     if (( i == cursor )); then
-      printf '%s%b%s' "$BOLD" "$row" "$RESET"
+      printf '%s%s%s' "$BOLD" "$row" "$RESET"
     else
-      printf '%b' "$row"
+      printf '%s' "$row"
     fi
   done
 
-  # Clear leftover lines
-  local drawn=${#branches[@]}
-  if (( drawn > visible )); then drawn=$visible; fi
-  local r
-  for (( r = drawn; r < visible; r++ )); do
-    printf '\e[%s;1H\e[2K' "$((r + 2))"
-  done
+  printf '\e[J'  # erase to end of screen
 
   # Status bar at last line
   printf '\e[%s;1H\e[2K%s j/↓ k/↑ move  x/<Space> toggle  D delete  q/<Esc> quit %s' "$LINES" "$DIM" "$RESET"
 }
 
-KEY=""
 read_key() {
+  local -n _key=$1
   local char
   IFS= read -rsn1 char
   if [[ "$char" == $'\x1b' ]]; then
     local seq
     IFS= read -rsn2 -t 0.01 seq || true
     case "$seq" in
-      '[A') KEY=UP ; return ;;
-      '[B') KEY=DOWN ; return ;;
+      '[A') _key=UP ; return ;;
+      '[B') _key=DOWN ; return ;;
     esac
-    KEY=ESC
+    _key=ESC
     return
   fi
-  KEY=$char
+  _key=$char
 }
 
 do_delete() {
-  tui_active=false
-  printf '\e[?25h'
-  printf '\e[?1049l'
-  if [[ -n "$saved_tty" ]]; then
-    stty "$saved_tty" 2>/dev/null
-  fi
+  local i
+  teardown_tui
 
   local selected=()
   for i in "${!branches[@]}"; do
@@ -239,17 +211,16 @@ do_delete() {
 # Enter TUI
 saved_tty=$(stty -g)
 get_term_size
-tui_active=true
-printf '\e[?1049h'  # alternate screen
-printf '\e[?25l'    # hide cursor
+printf '\e[?1049h\e[?25l'  # alternate screen, hide cursor
 stty raw -echo
 
 while true; do
   render
-  read_key
-  case "$KEY" in
+  key=""
+  read_key key
+  case "$key" in
     j|DOWN)
-      if (( cursor < last_count - 1 )); then cursor=$((cursor + 1)); fi
+      if (( cursor < ${#branches[@]} - 1 )); then cursor=$((cursor + 1)); fi
       ;;
     k|UP)
       if (( cursor > 0 )); then cursor=$((cursor - 1)); fi
