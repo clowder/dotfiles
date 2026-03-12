@@ -2,7 +2,7 @@
     ci = commit
     co = checkout
     st = status
-    br = !branch_name="$(git branch | grep '*')" && echo ${branch_name/* /}
+    br = rev-parse --abbrev-ref HEAD
     fush = push --force-with-lease
 
 [core]
@@ -16,6 +16,10 @@
 
 [branch]
     autosetuprebase = always
+    sort = -committerdate
+
+[tag]
+    sort = version:refname
 
 [init]
     defaultBranch = main
@@ -28,6 +32,18 @@
 
 [push]
     autoSetupRemote = true
+    followTags = true # auto-push annotated tags with their commits
+
+[fetch]
+    prune = true
+    pruneTags = true
+
+[rerere]
+    enabled = true    # reuse recorded conflict resolutions
+    autoupdate = true # auto-stage resolved files
+
+[rebase]
+    autoSquash = true # auto-reorder fixup!/squash!/amend! commits
 
 [include]
     path = ~/.gitconfig_local
