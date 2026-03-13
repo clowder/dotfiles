@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+create_branch=false
+while getopts ":b" opt; do
+  case $opt in
+    b) create_branch=true ;;
+    *) echo "Usage: git hop [-b] <branch>" >&2; exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: git hop [-b] <branch>" >&2
+  exit 1
+fi
+
+branch="$1"
+repo_root="$(git rev-parse --show-toplevel)"
+worktree_path="${repo_root}/.worktrees/${branch}"
+
+if [[ ! -d "$worktree_path" ]]; then
+  if [[ "$create_branch" == true ]]; then
+    git worktree add -b "$branch" "$worktree_path"
+  else
+    git worktree add "$worktree_path" "$branch"
+  fi
+fi
+
+if ! git worktree list --porcelain | grep -q "^worktree ${worktree_path}$"; then
+  echo "error: ${worktree_path} is not a valid worktree" >&2
+  exit 1
+fi
+
+cd "$worktree_path"
+echo "Hopped to ${branch} (.worktrees/${branch})"
+echo "Run 'exit' or press Ctrl-D to return"
+exec "$SHELL"
