@@ -1,3 +1,17 @@
+[user]
+    name = Chris Lowder
+    email = clowder@users.noreply.github.com
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMTgGfyXQe9yNrLqkACu2kiaMk2M/Cdo+4N1FCH9DDT
+
+[github]
+    user = clowder
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+
 [alias]
     ci = commit
     co = checkout
@@ -26,9 +40,6 @@
 
 [commit]
     gpgsign = true
-
-[gpg]
-    format = ssh
 
 [push]
     autoSetupRemote = true

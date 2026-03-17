@@ -42,5 +42,7 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
 
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+
 # Optional local config
 source ~/.zshrc_local
