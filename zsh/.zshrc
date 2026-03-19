@@ -25,6 +25,9 @@ bindkey '^[[B' history-beginning-search-forward
 # Language version managers
 eval "$(mise activate zsh)"
 
+# Key bindings for Git objects, powered by fzf
+source ~/.zsh/fzf-git.sh
+
 # User scripts
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -43,6 +46,9 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
 
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+
+# Turn off flow control (prevent CTRL-S from capturing all output).
+stty -ixon
 
 # Optional local config
 source ~/.zshrc_local
