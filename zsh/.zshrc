@@ -34,6 +34,9 @@ export PATH="$HOME/.local/bin:$PATH"
 # Postgres tools on our path
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
+# Git completions (stowed from git package)
+source ~/.zsh/git-completions.zsh
+
 # Enable autocompletion
 autoload -Uz compinit
 compinit -C

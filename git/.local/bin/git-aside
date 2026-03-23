@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+create_branch=false
+while getopts ":b" opt; do
+  case $opt in
+    b) create_branch=true ;;
+    *) echo "Usage: git aside [-b] <branch>" >&2; exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: git aside [-b] <branch>" >&2
+  exit 1
+fi
+
+branch="$1"
+repo_root="$(git rev-parse --show-toplevel)"
+dir_name="${branch//\//-}"
+worktree_path="${repo_root}/.worktrees/${dir_name}"
+
+if [[ ! -d "$worktree_path" ]]; then
+  if [[ "$create_branch" == true ]]; then
+    git worktree add -b "$branch" "$worktree_path"
+  else
+    git worktree add "$worktree_path" "$branch"
+  fi
+fi
+
+cd "$worktree_path"
+echo "Aside on ${branch} (.worktrees/${dir_name})"
+echo "Run 'exit' or press Ctrl-D to return"
+"$SHELL"
+
+if git -C "$repo_root" worktree remove "$worktree_path" 2>/dev/null; then
+  echo "Removed worktree .worktrees/${dir_name}"
+else
+  echo "warning: worktree has uncommitted changes, keeping it." >&2
+  echo "Remove manually: git worktree remove --force .worktrees/${dir_name}" >&2
+  exit 1
+fi
+echo "Back on $(git -C "$repo_root" branch --show-current)"

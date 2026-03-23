@@ -1,0 +1,12 @@
+#compdef git-aside
+#description Switch to a branch in a temporary worktree
+
+__git_aside_branches() {
+  local -a branches
+  branches=(${${(f)"$(git branch --format='%(refname:short)' 2>/dev/null)"}})
+  _describe 'branch' branches
+}
+
+_arguments \
+  '-b[Create a new branch]' \
+  '1:branch:__git_aside_branches'
