@@ -30,6 +30,11 @@ Use Glob/Grep tools, not `find`/`grep`/`rg`.
 - `--no-gpg-sign` unless told otherwise
 - Push only when asked
 
+## llm-wiki
+
+Personal knowledge base at `~/llm-wiki/`. When asked to file knowledge, read
+`~/llm-wiki/CLAUDE.md` for conventions and file accordingly.
+
 ## Commit messages
 
 - Subject: <72 cols, concise "what changed"

@@ -12,6 +12,7 @@
 3. Symlink
     ```shell
     stow -vv --target=$HOME zsh git vim mise misc agents
+    stow -vv --target=$HOME --no-folding llm-wiki
     ```
 4. Create some local cruft:
     ```shell
@@ -21,4 +22,8 @@
 5. Install Vim plugins
     ```vim
     :call minpac#update()
+    ```
+6. Bootstrap llm-wiki
+    ```shell
+    $ ~/llm-wiki/setup
     ```

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WIKI="$HOME/llm-wiki"
+
+if [[ -d "$WIKI/.git" ]]; then
+  echo "already initialised"
+  exit 0
+fi
+
+git init "$WIKI"
+git -C "$WIKI" config user.name "Claude Code"
+git -C "$WIKI" config user.email "claude@local"
+
+cat > "$WIKI/.gitignore" <<'IGNORE'
+# Managed by stow, not this repo
+CLAUDE.md
+setup
+IGNORE
+
+git -C "$WIKI" add .gitignore inbox/ topics/
+git -C "$WIKI" commit --no-gpg-sign -m "Initial scaffold"

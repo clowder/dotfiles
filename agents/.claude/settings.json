@@ -70,7 +70,12 @@
       "Bash(go version:*)",
       "Bash(go vet:*)",
       "Bash(golangci-lint:*)",
-      "Bash(shellcheck:*)"
+      "Bash(shellcheck:*)",
+      "Read(~/llm-wiki/**)",
+      "Write(~/llm-wiki/**)",
+      "Edit(~/llm-wiki/**)",
+      "Bash(git -C ~/llm-wiki add:*)",
+      "Bash(git -C ~/llm-wiki commit:*)"
     ],
     "defaultMode": "default"
   },
