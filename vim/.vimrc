@@ -40,6 +40,8 @@ call minpac#add('tpope/vim-surround')
 
 set nocompatible
 
+let mapleader = " "
+
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 
@@ -135,8 +137,11 @@ set splitright
 " custom shortcuts
 map <Leader>sc :vs db/schema.rb<cr>
 
-" RIP ctrl-p
-nnoremap <c-p> :FZF<cr>
+" FZF
+nnoremap <c-p> :Files<cr>
+nnoremap <leader>/ :Rg<cr>
+nnoremap <leader>b :Buffers<cr>
+nnoremap <leader>x :Commands<cr>
 
 " enable backups
 set backupdir=~/.vim/backup
@@ -151,6 +156,8 @@ set undofile
 
 " ack with ripgrep
 let g:ackprg = 'rg --vimgrep --no-heading --smart-case --hidden'
+nnoremap <leader>a :Ack!<space>
+nnoremap <leader>A :Ack! <c-r><c-w><cr>
 
 " show non-printable chars
 set list
