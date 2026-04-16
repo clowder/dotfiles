@@ -60,6 +60,8 @@
       "Bash(git stash push:*)",
       "Bash(git stash show:*)",
       "Bash(git rev-parse:*)",
+      "Bash(git agent-scratch:*)",
+      "Read(/tmp/agent-scratch/**)",
       "Bash(go build:*)",
       "Bash(go doc:*)",
       "Bash(go env:*)",

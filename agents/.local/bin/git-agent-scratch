@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+die() { echo "error: $1" >&2; exit "${2:-1}"; }
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: git agent-scratch <url>" >&2
+  exit 2
+fi
+
+url="$1"
+
+case "$url" in
+  https://*) ;;
+  *@*:*)     ;;
+  *) die "url must be https:// or user@host:path" 2 ;;
+esac
+
+basename="${url##*/}"
+basename="${basename%.git}"
+case "$basename" in
+  ''|.|..|*/*) die "could not derive safe basename from url" 2 ;;
+esac
+
+sandbox="/tmp/agent-scratch"
+dest="${sandbox}/${basename}"
+
+mkdir -m 700 -p "$sandbox"
+
+# Prune clones last touched over a week ago. Bounded to the hardcoded
+# sandbox; -P avoids following symlinks out of it.
+find -P "$sandbox" -mindepth 1 -maxdepth 1 -type d -mtime +7 -exec rm -rf {} + 2>/dev/null || true
+
+if [[ -e "$dest" ]]; then
+  if git -C "$dest" rev-parse --git-dir >/dev/null 2>&1; then
+    echo "reused $dest" >&2
+    echo "$dest"
+    exit 0
+  fi
+  die "$dest exists and is not a git repository"
+fi
+
+git clone --quiet --depth=1 --no-tags --single-branch --recurse-submodules=no \
+  "$url" "$dest"
+
+echo "cloned $dest" >&2
+echo "$dest"
