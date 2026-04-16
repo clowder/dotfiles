@@ -33,6 +33,7 @@
       "Bash(bundle show:*)",
       "Bash(bin/rails db:migrate:*)",
       "Bash(bin/rails generate:*)",
+      "Bash(bin/rails g:*)",
       "Bash(bin/rails routes:*)",
       "Bash(bin/rails setup:*)",
       "Bash(bin/rails spec:*)",
@@ -80,14 +81,21 @@
       "Write(~/llm-wiki/**)",
       "Edit(~/llm-wiki/**)",
       "Bash(git -C ~/llm-wiki add:*)",
-      "Bash(git -C ~/llm-wiki commit:*)"
+      "Bash(git -C ~/llm-wiki commit:*)",
+      "Bash(swift build:*)",
+      "Bash(swift test:*)",
+      "Bash(swift run:*)",
+      "Bash(swiftlint:*)"
     ],
     "defaultMode": "default"
   },
+  "model": "opus",
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "ruby-lsp@claude-plugins-official": true
+    "ruby-lsp@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true
   },
+  "effortLevel": "high",
   "gitAttribution": false
 }
