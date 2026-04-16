@@ -23,6 +23,12 @@
     excludesfile = ~/.gitignore_global
     precomposeUnicode = true
 
+[protocol "ext"]
+    allow = never # Block transport helpers that can execute arbitrary shell via URL
+
+[protocol "fd"]
+    allow = never # Block transport helpers that can execute arbitrary shell via URL
+
 [color]
     branch = auto
     diff = auto
