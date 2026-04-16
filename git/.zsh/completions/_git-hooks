@@ -1,0 +1,5 @@
+#compdef git-hooks
+#description Install or remove managed hook symlinks
+
+_arguments \
+  '1:command:(install uninstall)'
