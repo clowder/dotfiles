@@ -6,4 +6,7 @@ if [ -e /opt/homebrew/share/zsh/site-functions/_git ]; then
 fi
 
 fpath=(~/.zsh/completions $fpath)
-zstyle ':completion:*:*:git:*' user-commands aside:'Switch to a branch in a temporary worktree'
+zstyle ':completion:*:*:git:*' user-commands \
+  aside:'Switch to a branch in a temporary worktree' \
+  curate:'Interactively review and delete branches' \
+  hooks:'Install or remove managed hook symlinks'
