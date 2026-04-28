@@ -9,7 +9,7 @@
   "permissions": {
     "allow": [
       "Read(~/.claude/plans/**)",
-      "Read(~/.go/pkg/mod/**)",
+      "Read(~/go/pkg/mod/**)",
       "Read(~/.mise/installs/ruby/**)",
       "WebSearch(*)",
       "WebFetch(domain:docs.stripe.com)",
