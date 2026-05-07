@@ -31,7 +31,7 @@ call minpac#add('sonph/onehalf', {'subdir': 'vim'})
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('mileszs/ack.vim')
-call minpac#add('mudge/runspec.vim')
+call minpac#add('vim-test/vim-test')
 call minpac#add('rizzatti/dash.vim')
 call minpac#add('tpope/vim-abolish')
 call minpac#add('tpope/vim-commentary')
@@ -168,3 +168,9 @@ let g:lightline = {
       \   'lineinfo': '%3l:%-2c%V',
       \ },
       \ }
+
+" vim-test
+let test#strategy = "vimterminal"
+
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
