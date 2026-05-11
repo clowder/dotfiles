@@ -63,6 +63,7 @@
       "Bash(git rev-parse:*)",
       "Bash(git agent-scratch:*)",
       "Read(/tmp/agent-scratch/**)",
+      "Read(/private/tmp/agent-scratch/**)",
       "Bash(go build:*)",
       "Bash(go doc:*)",
       "Bash(go env:*)",

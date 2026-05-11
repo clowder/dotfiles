@@ -30,7 +30,7 @@ Don't use `find`/`grep`/`rg`, use your Glob/Grep tools.
 - `gh` for GitHub interactions
 - `--no-gpg-sign` unless told otherwise
 - Push only when asked
-- Don't query the GitHub API to explore repos, use `git agent-scratch <url>` (stdout = clone path)
+- Don't query the GitHub API to explore repos. Don't shallow-clone. Use `git agent-scratch <url>` (stdout = clone path)
 
 ## llm-wiki
 
