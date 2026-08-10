@@ -2,8 +2,17 @@
 
 ## Prose
 
-- No em dashes. Use commas or new sentences.
-- Don't summarize what you just did, the diff speaks for itself.
+Write in ASD-STE100 Simplified Technical English:
+
+- Use the active voice.
+- Give one idea per sentence, 20 words or fewer.
+- Use simple tenses. Don't use "-ing" forms or perfect tenses.
+- Use the same word for the same idea each time.
+- Don't use idioms or slang.
+- Keep paragraphs to 6 sentences or fewer.
+- Write file paths, identifiers, and numbers exactly and in full.
+
+Don't summarize what you just did, the diff speaks for itself.
 
 ## Working approach
 
