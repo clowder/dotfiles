@@ -4,9 +4,13 @@
     "DISABLE_BUG_COMMAND": "1",
     "DISABLE_ERROR_REPORTING": "1",
     "DISABLE_TELEMETRY": "1",
-    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_COUNT": "3",
     "GIT_CONFIG_KEY_0": "commit.gpgsign",
-    "GIT_CONFIG_VALUE_0": "false"
+    "GIT_CONFIG_VALUE_0": "false",
+    "GIT_CONFIG_KEY_1": "hook.claude-commit-msg.event",
+    "GIT_CONFIG_VALUE_1": "commit-msg",
+    "GIT_CONFIG_KEY_2": "hook.claude-commit-msg.command",
+    "GIT_CONFIG_VALUE_2": "~/.claude/git-hooks/commit-msg"
   },
   "includeCoAuthoredBy": false,
   "permissions": {

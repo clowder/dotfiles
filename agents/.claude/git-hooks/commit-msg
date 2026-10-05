@@ -1,0 +1,13 @@
+#!/bin/sh
+# Enforce the commit message rules in ~/.claude/CLAUDE.md.
+msg=$(sed -e '/^# -* >8 -*$/,$d' -e '/^#/d' "$1")
+
+if [ "$(printf '%s\n' "$msg" | head -n 1 | wc -m)" -gt 72 ]; then
+  echo "commit-msg: subject must be fewer than 72 columns" >&2
+  exit 1
+fi
+
+if printf '%s\n' "$msg" | tail -n +2 | awk 'length > 80 { found = 1 } END { exit !found }'; then
+  echo "commit-msg: hard-wrap body lines at 80 columns" >&2
+  exit 1
+fi

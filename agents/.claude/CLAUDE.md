@@ -60,8 +60,8 @@ Store scratch/planning notes outside the repo (e.g. `~/notes/<project>/`), not i
 
 ## Commit messages
 
-- Subject: <72 cols, concrete action ("Bring up X", "Fix Y")
-- Body: hard-wrap 80 cols. Explain why and any non-obvious decisions or alternatives considered. Do not recap what changed file-by-file — the diff already shows that. If the whole change is self-explanatory from the diff, a subject-only commit is fine.
+- Subject: concrete action ("Bring up X", "Fix Y")
+- Body: explain why and any non-obvious decisions or alternatives considered. Do not recap what changed file-by-file — the diff already shows that. If the whole change is self-explanatory from the diff, a subject-only commit is fine.
 - Keep bodies to 2-4 short paragraphs, 2-3 lines each. Cut every sentence that restates the diff.
 - Be empirical, not speculative. If you cite a mechanism, verify it; don't claim "uniformly at random" when the data shows otherwise.
 - Reference identifiers by name and format them as code (`startFoo`, `ticker.C`), not "the sleep" or "the ticker".
