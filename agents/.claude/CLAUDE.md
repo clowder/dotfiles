@@ -41,10 +41,6 @@ Run `go fix` on your code.
 - One assertion per test, group related assertions in system/integration tests
 - Prefer fixtures over factories
 
-## Search
-
-Don't use `find`/`grep`/`rg`, use your Glob/Grep tools.
-
 ## Git, Github
 
 - `gh` for GitHub interactions
