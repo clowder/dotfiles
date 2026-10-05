@@ -1,0 +1,24 @@
+#!/bin/sh
+# Block Write calls that break the rules in ~/.claude/CLAUDE.md.
+path=$(jq -r '.tool_input.file_path')
+
+case $path in
+  */db/migrate/*.rb)
+    if [ ! -e "$path" ]; then
+      echo "Don't hand-write migrations. Use \`bin/rails generate migration\`." >&2
+      exit 2
+    fi
+    ;;
+esac
+
+# The path can be new, so ask git about its nearest existing directory.
+dir=$(dirname "$path")
+while [ ! -d "$dir" ]; do dir=$(dirname "$dir"); done
+prefix=$(git -C "$dir" rev-parse --show-prefix 2>/dev/null) || exit 0
+
+case $prefix${path#"$dir"/} in
+  tmp/*)
+    echo "Don't put scratch files in the repo's tmp/. Use ~/notes/<project>/." >&2
+    exit 2
+    ;;
+esac

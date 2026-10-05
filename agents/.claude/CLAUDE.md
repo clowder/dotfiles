@@ -50,10 +50,6 @@ Run `go fix` on your code.
 - Don't perform destructive operations without explicit consent
 - Don't post/comment/reply as me on GitHub
 
-## Scratch files
-
-Store scratch/planning notes outside the repo (e.g. `~/notes/<project>/`), not in a gitignored `tmp/`. Gitignored files aren't recoverable if something goes wrong.
-
 ## Commit messages
 
 - Subject: concrete action ("Bring up X", "Fix Y")

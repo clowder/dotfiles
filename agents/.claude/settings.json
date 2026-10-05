@@ -12,6 +12,14 @@
     "GIT_CONFIG_KEY_2": "hook.claude-commit-msg.command",
     "GIT_CONFIG_VALUE_2": "~/.claude/git-hooks/commit-msg"
   },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/pre-write" }]
+      }
+    ]
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [],
