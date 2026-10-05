@@ -28,10 +28,6 @@ Gem source: `bundle show <gem>`.
 
 Use generators, not hand-written files.
 
-## Go
-
-Run `go fix` on your code.
-
 ## Testing
 
 - Strict red/green TDD: failing test first, watch it fail, then minimum code to pass

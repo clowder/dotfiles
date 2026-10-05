@@ -1,0 +1,16 @@
+#!/bin/sh
+# Ask Claude to run `go fix` on the Go packages it changed before it stops.
+
+# Block only once per turn, so Claude can't get stuck in a loop.
+already_blocked=$(jq -r '.stop_hook_active')
+if [ "$already_blocked" = true ]; then
+  exit 0
+fi
+
+for dir in $(git ls-files --modified --others --exclude-standard '*.go' | xargs -n 1 dirname | sort -u); do
+  if out=$(go fix -C "$dir" -diff . 2>&1) && [ -n "$out" ]; then
+    echo "$out" >&2
+    echo "Run \`go fix\` in $dir." >&2
+    exit 2
+  fi
+done

@@ -18,6 +18,11 @@
         "matcher": "Write",
         "hooks": [{ "type": "command", "command": "~/.claude/hooks/pre-write" }]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/stop-go-fix" }]
+      }
     ]
   },
   "includeCoAuthoredBy": false,
