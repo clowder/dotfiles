@@ -55,7 +55,3 @@ Use generators, not hand-written files.
 - Reference identifiers by name and format them as code (`startFoo`, `ticker.C`), not "the sleep" or "the ticker".
 - When the fix is non-obvious, pre-empt the reader's "why didn't you just X?" by covering each tempting alternative and why it fails.
 - Markdown formatting
-
-## Writing CLAUDE.md rules
-
-Prefer negative framing ("Don't X") over positive-first ("Use Y, not X"). Negative examples are stronger guardrails for preventing unwanted behavior.
