@@ -26,12 +26,30 @@
     ]
   },
   "includeCoAuthoredBy": false,
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Git Push Without Request [must name: the push]: Any update to a remote ref, by any route (`git push`, `git -C <dir> push`, tag pushes, branch deletions, aliases or scripts that push), unless the user asked for this push, either in their own message or by agreeing when the agent asked. The Git Push Destination ALLOW exception does not apply to this rule.",
+      "Local History Rewrite [must name: the rewrite operation]: Git history is additive only. Any command that rewrites or moves existing commits on a branch, including commits the agent created this session, unless the user's own message asked for that rewrite. Examples: `rebase` (including `-i`, `--autosquash` and `pull --rebase`), `commit --amend`, `reset --soft/--mixed/--hard <commit>`, `filter-branch`, `filter-repo`, `branch -f` and `update-ref`. This overrides the default that treats reshaping the agent's own work as normal iteration. Not this rule: new commits, `revert`, `cherry-pick`, `merge`, `rebase --abort`, and `git reset` or `git reset <path>` that only unstages."
+    ],
+    "hard_deny": [
+      "$defaults",
+      "GitHub Posting: Never post to GitHub by any route (`gh`, `gh api`, MCP tools, the browser). This covers creating, editing or deleting comments, reviews, issues and pull requests, including their titles and descriptions. Reading from GitHub is fine."
+    ]
+  },
   "permissions": {
     "allow": [],
     "deny": [
       "Read(**/.env*)",
       "Read(~/.ssh/**)",
-      "Read(~/.aws/**)"
+      "Read(~/.aws/**)",
+      "Bash(gh pr comment *)",
+      "Bash(gh pr review *)",
+      "Bash(gh pr create *)",
+      "Bash(gh pr edit *)",
+      "Bash(gh issue comment *)",
+      "Bash(gh issue create *)",
+      "Bash(gh issue edit *)"
     ],
     "defaultMode": "auto"
   },

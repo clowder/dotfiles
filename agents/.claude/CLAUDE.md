@@ -39,12 +39,7 @@ Use generators, not hand-written files.
 
 ## Git, Github
 
-- `gh` for GitHub interactions
-- Push only when asked
-- Don't query the GitHub API to explore repos. Don't shallow-clone. Use `git agent-scratch <url>` (stdout = clone path)
-- Don't rewrite history
-- Don't perform destructive operations without explicit consent
-- Don't post/comment/reply as me on GitHub
+Don't query the GitHub API to explore repos. Use `git agent-scratch <url>` (stdout = clone path).
 
 ## Commit messages
 
