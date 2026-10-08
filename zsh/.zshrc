@@ -11,10 +11,7 @@ setopt prompt_subst
 PROMPT="%{%F{yellow}%}%~%{%f%}> "
 RPROMPT='%{%F{red}%}${vcs_info_msg_0_}%{%f%}'
 
-export CLICOLOR="Yes" EDITOR="vim"
-
-# Use ripgrep to generate file lists for fzf
-export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs --vimgrep'
+export CLICOLOR="Yes" EDITOR="vim" FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 

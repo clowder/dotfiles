@@ -2,6 +2,7 @@ tap "heroku/brew"
 tap "stripe/stripe-cli"
 
 brew "bash"
+brew "fd"
 brew "fzf"
 brew "git"
 brew "gh"
