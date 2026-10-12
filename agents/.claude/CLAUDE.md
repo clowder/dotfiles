@@ -30,12 +30,15 @@ Use generators, not hand-written files.
 
 ## Testing
 
-- Strict red/green TDD: failing test first, watch it fail, then minimum code to pass
-- Exhaustive unit, 10-20% integration, few system tests
-- Don't extract test setup into helpers — duplicate it inline per test. No shared state, no deep nesting.
-- Assert against literals, no runtime generation unless the test needs uniqueness
-- One assertion per test, group related assertions in system/integration tests
-- Prefer fixtures over factories
+Your tests repeat your own reading of my intent, so most of them cost time and catch nothing. Test only what users depend on.
+
+- For each new feature, write one happy-path test through the public interface (HTTP, UI, CLI, or exported API). Watch it fail, then write the minimum code to pass.
+- Ask me before you test a failure path that encodes a business decision (who sees what, when to retry, when to fail).
+- Write other tests only when I ask.
+- Duplicate setup inline in each test. Use no helpers, shared state, or deep nesting.
+- Assert against literals. Generate values only when the test needs uniqueness.
+- One assertion per unit test.
+- Use fixtures, not factories.
 
 ## Git, Github
 
